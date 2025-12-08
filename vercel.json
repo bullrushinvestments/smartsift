@@ -1,0 +1,151 @@
+interface BuildCommand {
+  command: string;
+  output?: string;
+}
+
+interface EnvVariables {
+  [key: string]: string | undefined;
+}
+
+interface RedirectRule {
+  source: string;
+  destination: string;
+  permanent?: boolean;
+}
+
+interface HeaderPolicy {
+  source: string;
+  headers: Array<{ key: string; value: string }>;
+}
+
+interface CacheStrategy {
+  urlPattern: string;
+  headers?: Record<string, string>;
+  immutable?: boolean;
+  maxAgeSeconds?: number;
+}
+
+interface FrameworkSettings {
+  vercel?: { [key: string]: any };
+  netlify?: { [key: string]: any };
+}
+
+interface DeployConfig {
+  build: BuildCommand;
+  env: EnvVariables;
+  redirects: Array<RedirectRule>;
+  headers: Array<HeaderPolicy>;
+  cacheStrategies: Array<CacheStrategy>;
+  frameworkSettings: FrameworkSettings;
+}
+
+export const deployConfig: DeployConfig = {
+  build: {
+    command: "next build",
+    output: ".next"
+  },
+  env: {
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+    NEXT_PUBLIC_APP_ENV: process.env.NEXT_PUBLIC_APP_ENV
+  },
+  redirects: [
+    { source: "/old-url", destination: "/new-url", permanent: true }
+  ],
+  headers: [
+    {
+      source: "/*",
+      headers: [
+        { key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains" },
+        { key: "X-Content-Type-Options", value: "nosniff" }
+      ]
+    }
+  ],
+  cacheStrategies: [
+    {
+      urlPattern: "/api/*",
+      headers: {},
+      immutable: true,
+      maxAgeSeconds: 60
+    }
+  ],
+  frameworkSettings: {
+    vercel: { buildCommand: "next build", startCommand: "next start" },
+    netlify: { buildContext: "production" }
+  }
+};
+
+interface BuildCommand {
+  command: string;
+  output?: string;
+}
+
+interface EnvVariables {
+  [key: string]: string | undefined;
+}
+
+interface RedirectRule {
+  source: string;
+  destination: string;
+  permanent?: boolean;
+}
+
+interface HeaderPolicy {
+  source: string;
+  headers: Array<{ key: string; value: string }>;
+}
+
+interface CacheStrategy {
+  urlPattern: string;
+  headers?: Record<string, string>;
+  immutable?: boolean;
+  maxAgeSeconds?: number;
+}
+
+interface FrameworkSettings {
+  vercel?: { [key: string]: any };
+  netlify?: { [key: string]: any };
+}
+
+interface DeployConfig {
+  build: BuildCommand;
+  env: EnvVariables;
+  redirects: Array<RedirectRule>;
+  headers: Array<HeaderPolicy>;
+  cacheStrategies: Array<CacheStrategy>;
+  frameworkSettings: FrameworkSettings;
+}
+
+export const deployConfig: DeployConfig = {
+  build: {
+    command: "next build",
+    output: ".next"
+  },
+  env: {
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+    NEXT_PUBLIC_APP_ENV: process.env.NEXT_PUBLIC_APP_ENV
+  },
+  redirects: [
+    { source: "/old-url", destination: "/new-url", permanent: true }
+  ],
+  headers: [
+    {
+      source: "/*",
+      headers: [
+        { key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains" },
+        { key: "X-Content-Type-Options", value: "nosniff" }
+      ]
+    }
+  ],
+  cacheStrategies: [
+    {
+      urlPattern: "/api/*",
+      headers: {},
+      immutable: true,
+      maxAgeSeconds: 60
+    }
+  ],
+  frameworkSettings: {
+    vercel: { buildCommand: "next build", startCommand: "next start" },
+    netlify: { buildContext: "production" }
+  }
+};
